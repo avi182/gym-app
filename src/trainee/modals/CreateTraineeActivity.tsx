@@ -17,8 +17,10 @@ export const CreateTraineeActivityModal = ({
   trainingTypes,
 }: CreateTraineeActivityModalProps) => {
   const [step, setStep] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
   const [typedTrainingType, setTypedTrainingType] = useState<string>();
-  const [amountOfReps, setAmountOfReps] = useState<string>();
+  const [amountOfReps, setAmountOfReps] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [selectedTrainingTypeId, setSelectedTrainingType] = useState<string>();
 
   const handleTrainingTypeSelection = async (trainingTypeName: string) => {
@@ -38,10 +40,20 @@ export const CreateTraineeActivityModal = ({
       setStep(step + 1);
     } else if (step === 2) {
       if (amountOfReps && selectedTrainingTypeId) {
-        await onSubmit({
+        setStep(step + 1);
+      }
+    } else if (step === 3) {
+      if (selectedTrainingTypeId) {
+        const activity: TraineeActivity = {
           training_type_id: selectedTrainingTypeId,
-          amount: String(amountOfReps),
-        });
+          amount: amountOfReps,
+          description,
+          created_at: new Date().toISOString(),
+        };
+        setLoading(true);
+        await onSubmit(activity);
+        setLoading(false);
+        setOpen(false);
       }
     }
   };
@@ -54,7 +66,9 @@ export const CreateTraineeActivityModal = ({
       showCloseIcon={false}
     >
       <div className="flex flex-col gap-2">
-        {step === 1 && (
+        {loading ? (
+          <span className="text-gray-600">יוצר פעילות...</span>
+        ) : step === 1 ? (
           <div className="flex flex-col gap-2">
             <p className="text-gray-600 text-lg text-center">סוג הפעילות?</p>
             <input
@@ -83,23 +97,35 @@ export const CreateTraineeActivityModal = ({
                 ))}
             </div>
           </div>
-        )}
-        {step === 2 && (
+        ) : step === 2 ? (
           <div className="flex flex-col gap-2">
             <p className="text-gray-600 text-lg text-center">כמה חזרות?</p>
             <input
               className="text-gray-600 text-md p-1 border-4 border-gray-200 rounded"
               placeholder="כמה?"
               type="number"
+              value={amountOfReps}
               onChange={(e) => setAmountOfReps(e?.target?.value)}
             ></input>
           </div>
-        )}
+        ) : step === 3 ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-gray-600 text-lg text-center">תיאור נוסף</p>
+            <input
+              className="text-gray-600 text-md p-1 border-4 border-gray-200 rounded new-activity-description"
+              placeholder="אחיזה הפוכה על המוט"
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e?.target?.value)}
+            ></input>
+          </div>
+        ) : null}
+
         <div className="flex justify-center gap-2">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => {
-              //   onCloseModal();
+              setOpen(false);
             }}
           >
             ביטול

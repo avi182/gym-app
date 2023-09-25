@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Modal from "react-responsive-modal";
 import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { phone } = useUser();
+  const navigate = useNavigate();
 
   return (
     <header
@@ -12,7 +14,12 @@ export const Header = () => {
       style={{ backgroundColor: "#2d50be" }}
     >
       <div className="container mx-auto px-4">
-        <h1 className="text-white text-2xl font-bold">נתי אימונים בע״מ</h1>
+        <h1
+          className="text-white text-2xl font-bold"
+          onClick={() => navigate("/home")}
+        >
+          המתאמנים של נתי
+        </h1>
       </div>
       {phone && (
         <>

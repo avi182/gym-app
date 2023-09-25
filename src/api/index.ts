@@ -97,6 +97,7 @@ export type TraineeActivity = {
   training_type_id: string;
   description?: string;
   amount?: string;
+  created_at: string;
 };
 
 export const getTrainee = async (

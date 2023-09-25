@@ -28,9 +28,9 @@ export default function MainApp() {
     <html lang="en" className="h-full">
       <body className={`bg-gray-800 h-full flex flex-col`} dir="rtl">
         <div id="main-div" className="flex flex-col flex-grow h-screen">
-          <Header />
-          <main className="container mx-auto px-4 py-8 flex-grow">
-            <BrowserRouter>
+          <BrowserRouter>
+            <Header />
+            <main className="container mx-auto px-4 py-8 flex-grow">
               <Routes>
                 <Route
                   path="*"
@@ -42,8 +42,8 @@ export default function MainApp() {
                 />
                 <Route path="/login" element={<LoginForm />} />
               </Routes>
-            </BrowserRouter>
-          </main>
+            </main>
+          </BrowserRouter>
           <footer className="py-4" style={{ backgroundColor: "#2d50be" }}>
             <div className="container mx-auto px-4">
               <p className="text-white text-center opacity-50">v0.1</p>
