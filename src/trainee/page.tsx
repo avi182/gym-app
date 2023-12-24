@@ -20,6 +20,7 @@ export const TraineePage = () => {
   const [lastTrainings, setLastTrainings] = useState<TraineeActivity[]>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { trainingTypes, loading: isLoadingData, refetch } = useTrainingData();
+  
   const fetchTrainee = useCallback(async (traineeId: string) => {
     setLoading(true);
     const res = await getTrainee(traineeId);
@@ -81,7 +82,7 @@ export const TraineePage = () => {
           >
             צור פעילות חדשה
           </button>
-          <div>
+          <div className="flex flex-col">
             {lastTrainings?.map((act) => (
               <div onClick={() => {
                 navigate(`/trainee/${params.traineeId}/${act.training_type_id}`)

@@ -58,16 +58,11 @@ export const TraineeActivitiesPage = () => {
               navigate(-1)
             }}>חזור</div>
           </div>
-          <div>
+          <div className="flex flex-col">
             {filteredTrainings?.map((act) => (
               <ActivityCard
                 activity={act}
                 trainingTypes={trainingTypes}
-                amount={
-                  trainee?.activities?.filter(
-                    (at) => at.training_type_id === act.training_type_id
-                  ).length
-                }
               />
             ))}
             {filteredTrainings?.length === 0 && (
