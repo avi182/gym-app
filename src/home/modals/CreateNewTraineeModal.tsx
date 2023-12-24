@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import { TrainingType, createTrainingType } from "../../api";
 
 type CreateTraineeModalProps = {
   isOpen: boolean;

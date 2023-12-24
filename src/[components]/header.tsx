@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { phone } = useUser();
+  const { name } = useUser();
   const navigate = useNavigate();
 
   return (
@@ -13,22 +13,22 @@ export const Header = () => {
       className="flex py-6 px-4 sticky top-0 z-10"
       style={{ backgroundColor: "#2d50be" }}
     >
-      <div className="container mx-auto px-4">
+      <div className="flex container mx-auto px-4 items-center">
         <h1
           className="text-white text-2xl font-bold"
           onClick={() => navigate("/home")}
         >
-          המתאמנים של נתי
+          iTrainer
         </h1>
       </div>
-      {phone && (
+      {name && (
         <>
           <div
             onClick={() => {
               setIsModalOpen(true);
             }}
           >
-            <span>Welcome, {phone}!</span>
+            <span>ברוך הבא, {name.first}</span>
           </div>
           <Modal
             open={isModalOpen}

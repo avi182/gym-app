@@ -1,5 +1,6 @@
 import { TraineeActivity, TrainingType } from "../api";
 import moment from "moment";
+
 export const ActivityCard = ({
   activity,
   trainingTypes,
@@ -13,7 +14,7 @@ export const ActivityCard = ({
     trainingTypes?.find((type) => activity.training_type_id === type._id)
       ?.name || "ללא שם";
   const date = activity.created_at ? new Date(activity.created_at) : new Date();
-  const normalDate = moment(date).format("DD/MM/YYYY");
+  const normalDate = moment(date).format("DD/MM/YYYY HH:mm");
   return (
     <div
       key={activity._id}

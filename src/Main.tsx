@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginForm from "./login/page";
 import HomePage from "./home/page";
 import { TraineePage } from "./trainee/page";
+import { TraineeActivitiesPage } from "./trainee/traineeActivities/page";
 
 const ProtectedByToken = ({ ...children }): JSX.Element => {
   const token = localStorage.getItem("access-token");
@@ -20,6 +21,7 @@ export default function MainApp() {
       <Routes>
         <Route path="*" element={<HomePage />} />
         <Route path={`/trainee/:traineeId`} element={<TraineePage />} />
+        <Route path={`/trainee/:traineeId/:trainingTypeId`} element={<TraineeActivitiesPage />} />
       </Routes>
     );
   }

@@ -1,12 +1,12 @@
 import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { TraineeActivity, TrainingType, createTrainingType } from "../../api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type CreateTraineeActivityModalProps = {
   isOpen: boolean;
   setOpen: (value: boolean) => void;
-  onSubmit: (activity: TraineeActivity) => Promise<void>;
+  onSubmit: (activity: TraineeActivity, isNewType?: boolean) => Promise<void>;
   trainingTypes: TrainingType[] | undefined;
 };
 
@@ -51,7 +51,7 @@ export const CreateTraineeActivityModal = ({
           created_at: new Date().toISOString(),
         };
         setLoading(true);
-        await onSubmit(activity);
+        await onSubmit(activity, typedTrainingType ? true : false);
         setLoading(false);
         setOpen(false);
       }
@@ -62,10 +62,9 @@ export const CreateTraineeActivityModal = ({
     <Modal
       open={isOpen}
       onClose={() => setOpen(false)}
-      center
       showCloseIcon={false}
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-72">
         {loading ? (
           <span className="text-gray-600">יוצר פעילות...</span>
         ) : step === 1 ? (

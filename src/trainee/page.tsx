@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Trainee,
   TraineeActivity,
@@ -10,25 +10,22 @@ import {
 } from "../api";
 import { CreateTraineeActivityModal } from "./modals/CreateTraineeActivity";
 import { ActivityCard } from "./ActivityCard";
-import { Map } from "typescript";
+import { useTrainingData } from "../hooks/useTrainingData";
 
 export const TraineePage = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [trainee, setTrainee] = useState<Trainee>();
   const [lastTrainings, setLastTrainings] = useState<TraineeActivity[]>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [trainingTypes, setTrainingTypes] = useState<TrainingType[]>();
+  const { trainingTypes, loading: isLoadingData, refetch } = useTrainingData();
   const fetchTrainee = useCallback(async (traineeId: string) => {
     setLoading(true);
     const res = await getTrainee(traineeId);
     if (res.success) {
+      console.log({trainee: res?.trainee})
       setTrainee(res?.trainee);
-    }
-    const res2 = await getTrainingTypes();
-    if (res2.success) {
-      console.log({ res2 });
-      setTrainingTypes(res2?.training_types);
     }
     setLoading(false);
   }, []);
@@ -59,12 +56,19 @@ export const TraineePage = () => {
         })[0]
       );
     });
-    setLastTrainings(last);
+    setLastTrainings(last.sort((a, b) => {
+      return (
+        new Date(b?.created_at).getTime() -
+        new Date(a?.created_at).getTime()
+      );
+    }));
   }, [trainee]);
 
+  const isLoading = loading || isLoadingData;
+  
   return (
     <div>
-      {loading ? (
+      {isLoading  ? (
         <div>Loading...</div>
       ) : (
         <div className="flex flex-col gap-4">
@@ -79,15 +83,19 @@ export const TraineePage = () => {
           </button>
           <div>
             {lastTrainings?.map((act) => (
-              <ActivityCard
+              <div onClick={() => {
+                navigate(`/trainee/${params.traineeId}/${act.training_type_id}`)
+              }}>
+                <ActivityCard
                 activity={act}
                 trainingTypes={trainingTypes}
                 amount={
                   trainee?.activities?.filter(
                     (at) => at.training_type_id === act.training_type_id
                   ).length
-                }
-              />
+                  }
+                />
+            </div>
             ))}
             {lastTrainings?.length === 0 && (
               <span className="text-gray-600">
@@ -100,7 +108,7 @@ export const TraineePage = () => {
               trainingTypes={trainingTypes}
               isOpen={isModalOpen}
               setOpen={setIsModalOpen}
-              onSubmit={async (act: TraineeActivity) => {
+              onSubmit={async (act: TraineeActivity, isNewType?: boolean) => {
                 act.trainee_id = params.traineeId;
                 const res = await createActivity(act);
                 if (res.success && res.activity && trainee) {
@@ -108,6 +116,9 @@ export const TraineePage = () => {
                     ...trainee,
                     activities: [...(trainee?.activities || []), res.activity],
                   });
+                  if (isNewType) {
+                    refetch()
+                  }
                   setIsModalOpen(false);
                 }
               }}
