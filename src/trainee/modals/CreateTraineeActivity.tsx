@@ -74,6 +74,7 @@ export const CreateTraineeActivityModal = ({
             <input
               className="text-gray-600 text-md p-1 border-4 border-gray-200 rounded"
               placeholder="פעילות חדשה?"
+              autoFocus={false}
               onChange={(e) => setTypedTrainingType(e?.target?.value)}
             ></input>
             <div className="text-gray-600 text-right h-60 overflow-auto">

@@ -169,7 +169,7 @@ const isProduction = env === "production";
 
 const axiosInstance = axios.create({
   baseURL: isProduction
-    ? "https://gym-server-ht37.onrender.com"
+    ? "https://gym-server-a8kd.onrender.com"
     : "http://localhost:8000", // Update with your server's URL
   withCredentials: true,
 });
