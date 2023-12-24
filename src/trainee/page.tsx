@@ -11,6 +11,7 @@ import {
 import { CreateTraineeActivityModal } from "./modals/CreateTraineeActivity";
 import { ActivityCard } from "./ActivityCard";
 import { useTrainingData } from "../hooks/useTrainingData";
+import { Loader } from "../[components]/loader";
 
 export const TraineePage = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ export const TraineePage = () => {
   return (
     <div>
       {isLoading  ? (
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl">{trainee?.name}</h1>

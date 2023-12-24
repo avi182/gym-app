@@ -39,7 +39,7 @@ export const protectedRoute = async () => {
     }
     return { success: false };
   } catch (error) {
-    console.log(error);
+    localStorage.removeItem("access-token");
     return { success: false };
   }
 };

@@ -15,8 +15,8 @@ export const CreateNewTraineeModal = ({
 }: CreateTraineeModalProps) => {
   const [traineeName, setTraineeName] = useState<string>("");
   return (
-    <Modal open={isOpen} onClose={onCloseModal} center showCloseIcon={false}>
-      <div className="flex flex-col gap-2">
+    <Modal open={isOpen} onClose={onCloseModal} showCloseIcon={false}>
+      <div className="flex flex-col gap-4 w-72">
         <div className="flex flex-col gap-2 items-center">
           <p className="text-gray-600 text-lg">מה שם המתאמן?</p>
           <input

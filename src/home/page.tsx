@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   Trainee,
-  TrainingType,
   createTrainee,
   getTrainees,
-  getTrainingTypes,
 } from "../api";
-import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import { CreateNewTraineeModal } from "./modals/CreateNewTraineeModal";
 import { TraineeCard } from "./trainee-card/TraineeCard";
+import { Loader } from "../[components]/loader";
 
 const HomePage = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -33,17 +31,19 @@ const HomePage = () => {
     <div>
       <h1>המתאמנים שלך</h1>
       {isLoading ? (
-        <ReactLoading type="spin" color="#000" />
+        <Loader />
       ) : (
         <div className="flex flex-wrap justify-center">
-          {trainees &&
+          {trainees?.length ?
             trainees.map((trainee) => (
               <TraineeCard
                 key={trainee._id}
                 trainee={trainee}
                 navigate={navigate}
               />
-            ))}
+            )): <div className="my-52">
+              <span className="text-2xl text-purple-300">אין לך עדיין מתאמנים... תוסיף אחד?</span>
+              </div>}
         </div>
       )}
       <CreateNewTraineeModal

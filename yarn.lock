@@ -7815,11 +7815,6 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-loading@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-2.0.3.tgz#e8138fb0c3e4674e481b320802ac7048ae14ffb9"
-  integrity sha512-Vdqy79zq+bpeWJqC+xjltUjuGApyoItPgL0vgVfcJHhqwU7bAMKzysfGW/ADu6i0z0JiOCRJjo+IkFNkRNbA3A==
-
 react-otp-input@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-otp-input/-/react-otp-input-3.0.4.tgz#4867cc7e7e42a76d4757423aca03644cb96bba98"
@@ -7918,6 +7913,11 @@ react-spinkit@^3.0.0:
     loaders.css "^0.1.2"
     object-assign "^4.1.0"
     prop-types "^15.5.8"
+
+react-spinners@^0.13.8:
+  version "0.13.8"
+  resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.8.tgz#5262571be0f745d86bbd49a1e6b49f9f9cb19acc"
+  integrity sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==
 
 react-universal-interface@^0.6.2:
   version "0.6.2"

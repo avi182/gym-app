@@ -8,6 +8,7 @@ import {
   getTrainingTypes,
 } from "../../api";
 import { ActivityCard } from "../ActivityCard";
+import { Loader } from "../../[components]/loader";
 
 export const TraineeActivitiesPage = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export const TraineeActivitiesPage = () => {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <div className="flex flex-col gap-4">
           <div className="flex justify-between">

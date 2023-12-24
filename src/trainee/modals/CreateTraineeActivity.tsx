@@ -76,8 +76,8 @@ export const CreateTraineeActivityModal = ({
               autoFocus={false}
               onChange={(e) => setTypedTrainingType(e?.target?.value)}
             ></input>
-            <div className="text-gray-600 text-right h-60 overflow-auto">
-              {trainingTypes
+            <div className={`text-gray-600 text-right ${trainingTypes?.length ? 'h-60' : 'h-20'} overflow-auto`}>
+              {trainingTypes?.length ? trainingTypes
                 ?.filter((val) => val?.name?.includes(typedTrainingType || ""))
                 ?.map((trainingType) => (
                   <div
@@ -94,7 +94,7 @@ export const CreateTraineeActivityModal = ({
                   >
                     {trainingType.name}
                   </div>
-                ))}
+                )) : <div className="flex h-full items-center justify-center text-md font-semibold">אין לך שום סוגי פעילות. צור אחת עכשיו!</div>}
             </div>
           </div>
         ) : step === 2 ? (
