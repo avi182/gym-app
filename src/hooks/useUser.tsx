@@ -3,7 +3,7 @@ import { protectedRoute } from "../api";
 
 export const useUser = () => {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [user, setUser] = useState<{phone: string, id: string, name: {first:string, last: string}}>();
+  const [user, setUser] = useState<{phone: string, id: string, name: {first_name: string, last_name: string}}>();
   const cookie = localStorage.getItem("access-token");
 
   const fetch = async () => {

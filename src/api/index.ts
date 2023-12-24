@@ -1,26 +1,27 @@
 import axios from "axios";
 
-export const loginWithPhone = async (phone: string) => {
+export const loginWithPhone = async (phone: string, isNewUser?: boolean): Promise<{success: boolean, isNewUser?: boolean}> => {
   const res = await axiosInstance.post(
     "/login",
-    { phone },
+    { phone, is_new_user: !!isNewUser },
     {
       withCredentials: false,
     }
   );
   if (res.status === 200) {
-    return true;
+    return {success: true, isNewUser: res.data.is_new_user};
   }
-  return false;
+  return {success: false};
 };
 
 export const verifyOTP = async (
   phone: string,
-  otp: string
+  otp: string,
+  name?: { first_name: string; last_name: string }
 ): Promise<{ token?: string; success: boolean }> => {
   const res = await axiosInstance.post(
     "/verify",
-    { phone, otp: Number(otp) },
+    { phone, otp: Number(otp), name },
     {
       withCredentials: false,
     }

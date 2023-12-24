@@ -28,7 +28,7 @@ export const Header = () => {
               setIsModalOpen(true);
             }}
           >
-            <span>ברוך הבא, {name.first}</span>
+            <span>ברוך הבא, {name.first_name}</span>
           </div>
           <Modal
             open={isModalOpen}
