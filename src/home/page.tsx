@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Trainee,
-  createTrainee,
-  getTrainees,
-} from "../api";
+import { Trainee, createTrainee, getTrainees } from "../api";
 import { useNavigate } from "react-router-dom";
 import { CreateNewTraineeModal } from "./modals/CreateNewTraineeModal";
 import { TraineeCard } from "./trainee-card/TraineeCard";
@@ -34,23 +30,27 @@ const HomePage = () => {
         <Loader />
       ) : (
         <div className="flex flex-wrap justify-center">
-          {trainees?.length ?
+          {trainees?.length ? (
             trainees.map((trainee) => (
               <TraineeCard
                 key={trainee._id}
                 trainee={trainee}
                 navigate={navigate}
               />
-            )): <div className="my-52">
-              <span className="text-2xl text-purple-300">אין לך עדיין מתאמנים... תוסיף אחד?</span>
-              </div>}
+            ))
+          ) : (
+            <div className="my-52">
+              <span className="text-2xl text-purple-300">
+                אין לך עדיין מתאמנים... תוסיף אחד?
+              </span>
+            </div>
+          )}
         </div>
       )}
       <CreateNewTraineeModal
         isOpen={isModalOpen}
         onCloseModal={() => setIsModalOpen(false)}
         onSubmit={async (name) => {
-          console.log({ name });
           const res = await createTrainee(name);
           if (res.success) {
             setTrainees([...(trainees || []), res.trainee]);

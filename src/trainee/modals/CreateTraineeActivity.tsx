@@ -26,13 +26,11 @@ export const CreateTraineeActivityModal = ({
   const handleTrainingTypeSelection = async (trainingTypeName: string) => {
     const res = await createTrainingType({ name: trainingTypeName });
     if (res.success) {
-      console.log({ res });
       setSelectedTrainingType(res.training_type_id);
     }
   };
 
   const handleNextStep = async () => {
-    console.log({ step, typedTrainingType });
     if (step === 1) {
       if (typedTrainingType) {
         handleTrainingTypeSelection(typedTrainingType);
@@ -59,11 +57,7 @@ export const CreateTraineeActivityModal = ({
   };
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={() => setOpen(false)}
-      showCloseIcon={false}
-    >
+    <Modal open={isOpen} onClose={() => setOpen(false)} showCloseIcon={false}>
       <div className="flex flex-col gap-2 w-72">
         {loading ? (
           <span className="text-gray-600">יוצר פעילות...</span>
@@ -76,25 +70,36 @@ export const CreateTraineeActivityModal = ({
               autoFocus={false}
               onChange={(e) => setTypedTrainingType(e?.target?.value)}
             ></input>
-            <div className={`text-gray-600 text-right ${trainingTypes?.length ? 'h-60' : 'h-20'} overflow-auto`}>
-              {trainingTypes?.length ? trainingTypes
-                ?.filter((val) => val?.name?.includes(typedTrainingType || ""))
-                ?.map((trainingType) => (
-                  <div
-                    className={`flex border-4 mb-2 rounded-lg p-1 ${
-                      selectedTrainingTypeId === trainingType._id
-                        ? "border-red-400"
-                        : "border-gray-200"
-                    }`}
-                    key={trainingType._id}
-                    onClick={() => {
-                      console.log({ trainingType });
-                      setSelectedTrainingType(trainingType._id);
-                    }}
-                  >
-                    {trainingType.name}
-                  </div>
-                )) : <div className="flex h-full items-center justify-center text-md font-semibold">אין לך שום סוגי פעילות. צור אחת עכשיו!</div>}
+            <div
+              className={`text-gray-600 text-right ${
+                trainingTypes?.length ? "h-60" : "h-20"
+              } overflow-auto`}
+            >
+              {trainingTypes?.length ? (
+                trainingTypes
+                  ?.filter((val) =>
+                    val?.name?.includes(typedTrainingType || "")
+                  )
+                  ?.map((trainingType) => (
+                    <div
+                      className={`flex border-4 mb-2 rounded-lg p-1 ${
+                        selectedTrainingTypeId === trainingType._id
+                          ? "border-red-400"
+                          : "border-gray-200"
+                      }`}
+                      key={trainingType._id}
+                      onClick={() => {
+                        setSelectedTrainingType(trainingType._id);
+                      }}
+                    >
+                      {trainingType.name}
+                    </div>
+                  ))
+              ) : (
+                <div className="flex h-full items-center justify-center text-md font-semibold">
+                  אין לך שום סוגי פעילות. צור אחת עכשיו!
+                </div>
+              )}
             </div>
           </div>
         ) : step === 2 ? (

@@ -7,7 +7,6 @@ export const UserCard = ({ user }: { user: IUser }) => {
     const res = await AdminActions.impersonateUser(user.id);
     if (res?.success && res?.token && res?.old_token) {
       const { token, old_token } = res;
-      console.log({ token, old_token });
       localStorage.setItem("old-access-token", old_token);
       localStorage.setItem("access-token", token);
       window.location.href = "/home";

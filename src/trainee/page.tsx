@@ -21,12 +21,11 @@ export const TraineePage = () => {
   const [lastTrainings, setLastTrainings] = useState<TraineeActivity[]>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { trainingTypes, loading: isLoadingData, refetch } = useTrainingData();
-  
+
   const fetchTrainee = useCallback(async (traineeId: string) => {
     setLoading(true);
     const res = await getTrainee(traineeId);
-    if (res.success) {
-      console.log({trainee: res?.trainee})
+    if (res?.success) {
       setTrainee(res?.trainee);
     }
     setLoading(false);
@@ -58,19 +57,20 @@ export const TraineePage = () => {
         })[0]
       );
     });
-    setLastTrainings(last.sort((a, b) => {
-      return (
-        new Date(b?.created_at).getTime() -
-        new Date(a?.created_at).getTime()
-      );
-    }));
+    setLastTrainings(
+      last.sort((a, b) => {
+        return (
+          new Date(b?.created_at).getTime() - new Date(a?.created_at).getTime()
+        );
+      })
+    );
   }, [trainee]);
 
   const isLoading = loading || isLoadingData;
-  
+
   return (
     <div>
-      {isLoading  ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <div className="flex flex-col gap-4">
@@ -85,19 +85,23 @@ export const TraineePage = () => {
           </button>
           <div className="flex flex-col">
             {lastTrainings?.map((act) => (
-              <div onClick={() => {
-                navigate(`/trainee/${params.traineeId}/${act.training_type_id}`)
-              }}>
+              <div
+                onClick={() => {
+                  navigate(
+                    `/trainee/${params.traineeId}/${act.training_type_id}`
+                  );
+                }}
+              >
                 <ActivityCard
-                activity={act}
-                trainingTypes={trainingTypes}
-                amount={
-                  trainee?.activities?.filter(
-                    (at) => at.training_type_id === act.training_type_id
-                  ).length
+                  activity={act}
+                  trainingTypes={trainingTypes}
+                  amount={
+                    trainee?.activities?.filter(
+                      (at) => at.training_type_id === act.training_type_id
+                    ).length
                   }
                 />
-            </div>
+              </div>
             ))}
             {lastTrainings?.length === 0 && (
               <span className="text-gray-600">
@@ -119,7 +123,7 @@ export const TraineePage = () => {
                     activities: [...(trainee?.activities || []), res.activity],
                   });
                   if (isNewType) {
-                    refetch()
+                    refetch();
                   }
                   setIsModalOpen(false);
                 }

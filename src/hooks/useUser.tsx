@@ -9,17 +9,14 @@ export interface IUser {
 }
 
 export const useUser = () => {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>();
-  const cookie = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access-token");
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetch = async () => {
     try {
       const res = await protectedRoute();
-      const iUser = JSON.parse(res.user);
-      setUser(iUser);
-      setIsAdmin(!!iUser?.is_admin);
+      setUser(res?.user);
       setLoading(false);
     } catch (e) {
       console.error(e);
@@ -28,7 +25,12 @@ export const useUser = () => {
 
   useEffect(() => {
     fetch();
-  }, [cookie]);
+  }, [token]);
 
-  return { phone: user?.phone, name: user?.name, isAdmin, loading };
+  return {
+    phone: user?.phone,
+    name: user?.name,
+    isAdmin: !!user?.is_admin,
+    loading,
+  };
 };
