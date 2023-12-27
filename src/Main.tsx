@@ -5,6 +5,7 @@ import LoginForm from "./login/page";
 import HomePage from "./home/page";
 import { TraineePage } from "./trainee/page";
 import { TraineeActivitiesPage } from "./trainee/traineeActivities/page";
+import AdminPage from "./admin/page";
 
 const ProtectedByToken = ({ ...children }): JSX.Element => {
   const token = localStorage.getItem("access-token");
@@ -20,8 +21,12 @@ export default function MainApp() {
     return (
       <Routes>
         <Route path="*" element={<HomePage />} />
+        <Route path={`/admin`} element={<AdminPage />} />
         <Route path={`/trainee/:traineeId`} element={<TraineePage />} />
-        <Route path={`/trainee/:traineeId/:trainingTypeId`} element={<TraineeActivitiesPage />} />
+        <Route
+          path={`/trainee/:traineeId/:trainingTypeId`}
+          element={<TraineeActivitiesPage />}
+        />
       </Routes>
     );
   }

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { name } = useUser();
+  const { name, isAdmin } = useUser();
   const navigate = useNavigate();
 
   return (
@@ -51,13 +51,33 @@ export const Header = () => {
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => {
-                    localStorage.removeItem("access-token");
-                    window.location.href = "/";
+                    const oldToken = localStorage.getItem("old-access-token");
+                    if (oldToken) {
+                      localStorage.setItem("access-token", oldToken);
+                      localStorage.removeItem("old-access-token");
+                      window.location.href = "/home";
+                    } else {
+                      localStorage.removeItem("access-token");
+                      window.location.href = "/";
+                    }
                   }}
                 >
                   כן
                 </button>
               </div>
+              {isAdmin && (
+                <div className="flex justify-center my-4">
+                  <button
+                    className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      navigate("/admin");
+                    }}
+                  >
+                    ADMIN
+                  </button>
+                </div>
+              )}
             </div>
           </Modal>
         </>

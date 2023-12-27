@@ -1,6 +1,10 @@
 import axios from "axios";
+import { IUser } from "../hooks/useUser";
 
-export const loginWithPhone = async (phone: string, isNewUser?: boolean): Promise<{success: boolean, isNewUser?: boolean}> => {
+export const loginWithPhone = async (
+  phone: string,
+  isNewUser?: boolean
+): Promise<{ success: boolean; isNewUser?: boolean }> => {
   const res = await axiosInstance.post(
     "/login",
     { phone, is_new_user: !!isNewUser },
@@ -9,9 +13,9 @@ export const loginWithPhone = async (phone: string, isNewUser?: boolean): Promis
     }
   );
   if (res.status === 200) {
-    return {success: true, isNewUser: res.data.is_new_user};
+    return { success: true, isNewUser: res.data.is_new_user };
   }
-  return {success: false};
+  return { success: false };
 };
 
 export const verifyOTP = async (
@@ -80,6 +84,38 @@ export const getTrainees = async (): Promise<{
     return res.data;
   }
   return { success: false };
+};
+
+const getUsers = async (): Promise<{
+  users?: IUser[];
+  success: boolean;
+}> => {
+  const res = await axiosInstance.get("/protected/admin/users");
+  if (res.status === 200) {
+    return res.data;
+  }
+  return { success: false };
+};
+
+const impersonateUser = async (
+  userId: string
+): Promise<{
+  token?: string;
+  old_token?: string;
+  success: boolean;
+}> => {
+  const res = await axiosInstance.post(
+    `/protected/admin/users/${userId}/impersonate`
+  );
+  if (res.status === 200) {
+    return res.data;
+  }
+  return { success: false };
+};
+
+export const AdminActions = {
+  getUsers,
+  impersonateUser,
 };
 
 export type Trainee = {
