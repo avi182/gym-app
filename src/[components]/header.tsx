@@ -36,10 +36,10 @@ export const Header = () => {
             center
           >
             <div className="m-2">
-              <h2 className="text-gray-600 p-2 text-xl">
+              <h2 className="text-gray-600 p-2 text-xl text-center">
                 אתה בטוח שאתה רוצה להתנתק?
               </h2>
-              <div className="flex justify-center space-x-1 gap-2">
+              <div className="flex justify-center space-x-1 gap-2 mt-2">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => {
